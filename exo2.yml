@@ -1,0 +1,67 @@
+openapi: 3.0.3
+info:
+  title: manipulation des parametres et les reponses
+  version: 1.1.0
+servers:
+  - url: http://localhost:8000
+paths:
+  /users:
+    get:
+      summary: Récupérer la liste des utilisateurs
+      description: Retourne une liste d'utilisateurs sous forme JSON
+      parameters:
+        - name: page
+          in: query
+          description: Numéro de la page à récupérer
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: size
+          in: query
+          description: Nombre d'utilisateurs par page
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 20
+      responses:
+        "200":
+          description: Liste des utilisateurs retrouvés
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+              example:
+                - id: 1
+                  name: Alice
+                  email: alice@example.com
+                - id: 2
+                  name: Bob
+                  email: bob@example.com
+        "400":
+          description: Mauvais types de paramètres fournis
+          content:
+            application/json:
+              example:
+                error: "Bad types for provided query parameters"
+
+components:
+  schemas:
+    User:
+      type: object
+      proprieties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: Alice
+        email:
+          type: string
+          format: email
+          example: alice@example.com
