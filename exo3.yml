@@ -23,6 +23,36 @@ paths:
                 - id: 2
                   title: Apprendre OpenAPI
                   completed: true
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/newTask"
+            example:
+              - title: newTask 1
+                completed: false
+              - title: test 2
+                completed: true
+      responses:
+        201:
+          description: Retourne la liste nouvelle créée
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/tasks"
+              example:
+                - id: 1
+                  title: newTask 1
+                  completed: false
+                - id: 2
+                  title: test 2
+                  completed: false
 
 components:
   schemas:
@@ -36,6 +66,17 @@ components:
         title:
           type: string
           example: Faire les courses
+        completed:
+          type: boolean
+          example: false
+    newTask:
+      type: object
+      required:
+        - title
+      properties:
+        title:
+          type: string
+          example: Nouvelle tache
         completed:
           type: boolean
           example: false
