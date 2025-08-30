@@ -53,7 +53,30 @@ paths:
                 - id: 2
                   title: test 2
                   completed: false
-  /Task/{id}:
+    delete:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/idTask"
+      responses:
+        200:
+          description: Supprimer une liste de tache
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Task"
+                example:
+                  id: 1
+                  title: Faire les courses
+                  completed: false
+
+  /tasks/{id}:
     get:
       parameters:
         - name: id
